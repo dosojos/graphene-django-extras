@@ -9,7 +9,7 @@ from django.contrib.contenttypes.fields import (
     GenericRel,
 )
 from django.db import models
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 from graphene import (
     Field,
     ID,
@@ -52,7 +52,7 @@ def assert_valid_name(name):
 
 
 def convert_choice_name(name):
-    name = to_const(force_text(name))
+    name = to_const(force_str(name))
     try:
         assert_valid_name(name)
     except AssertionError:
@@ -98,7 +98,8 @@ def convert_django_field_with_choices(
                 def description(self):
                     return named_choices_descriptions[self.name]
 
-            enum = Enum(name, list(named_choices), type=EnumWithDescriptionsType)
+            enum = Enum(name, list(named_choices),
+                        type=EnumWithDescriptionsType)
             registry.register_enum(name, enum)
 
         if type(field).__name__ == "MultiSelectField":
@@ -163,7 +164,8 @@ def construct_fields(
                 input_flag
                 and not field.editable
                 and not isinstance(
-                    field, (models.fields.related.ForeignObjectRel, GenericForeignKey)
+                    field, (models.fields.related.ForeignObjectRel,
+                            GenericForeignKey)
                 )
             ):
                 continue
@@ -371,7 +373,8 @@ def convert_many_rel_to_djangomodel(
                 )
             else:
                 return DjangoListField(
-                    _type, required=is_required(field) and input_flag == "create"
+                    _type, required=is_required(
+                        field) and input_flag == "create"
                 )
 
     return Dynamic(dynamic_type)
@@ -432,7 +435,8 @@ def convert_generic_foreign_key_to_object(
                 break
 
         if ct_field is not None and fk_field is not None:
-            required = (is_required(ct_field) and is_required(fk_field)) or required
+            required = (is_required(ct_field)
+                        and is_required(fk_field)) or required
 
         if input_flag:
             return GenericForeignKeyInputType(
