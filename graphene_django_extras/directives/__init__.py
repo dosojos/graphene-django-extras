@@ -3,8 +3,11 @@ from graphql.type.directives import specified_directives as default_directives
 
 from .date import DateGraphQLDirective
 from .list import ShuffleGraphQLDirective, SampleGraphQLDirective
-from .numbers import FloorGraphQLDirective, CeilGraphQLDirective
-from .string import (
+from graphene_django_extras.directives.numbers import (
+    FloorGraphQLDirective,
+    CeilGraphQLDirective,
+)
+from graphene_django_extras.directives.string import (
     DefaultGraphQLDirective,
     Base64GraphQLDirective,
     NumberGraphQLDirective,

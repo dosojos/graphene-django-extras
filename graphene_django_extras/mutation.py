@@ -9,7 +9,7 @@ from graphene_django.types import ErrorType
 
 from .base_types import factory_type
 from .registry import get_global_registry
-from .types import DjangoObjectType, DjangoInputObjectType
+from graphene_django_extras.types import DjangoObjectType, DjangoInputObjectType
 from .utils import get_Object_or_None
 
 
