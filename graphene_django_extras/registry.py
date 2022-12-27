@@ -25,7 +25,7 @@ class Registry(object):
         return self._registry_directives.get(name)
 
     def register(self, cls, for_input=None):
-        from .types import DjangoInputObjectType, DjangoObjectType
+        from graphene_django_extras.types import DjangoInputObjectType, DjangoObjectType
 
         assert issubclass(cls, (DjangoInputObjectType, DjangoObjectType)), (
             "Only DjangoInputObjectType or DjangoObjectType can be"
